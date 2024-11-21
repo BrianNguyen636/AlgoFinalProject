@@ -40,6 +40,7 @@ public class Edge {
         this.v2 = w;
     }
 
+
     /**
      * Return the first endpoint of this edge.
      * @return  the first endpoint of this edge

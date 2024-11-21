@@ -8,7 +8,7 @@ public class GraphReader {
      * @param filepath folder/graph.txt
      * @return SimpleGraph constructed from the text.
      */
-    public static SimpleGraph graphReader(String filepath) {
+    public static SimpleGraph readGraph(String filepath) {
         SimpleGraph graph = new SimpleGraph();
         String path = "graphGenerationCode/graphGenerationCode/";
         String graphType = filepath.split("/")[0];
@@ -46,7 +46,7 @@ public class GraphReader {
                 }
 
                 graph.insertEdge(v1, v2,
-                        new int[]{0,0,value},
+                        new EdgeData(0,0,value),
                         vertex1 + "-" + vertex2);
             }
         } catch (Exception e) {
@@ -59,7 +59,7 @@ public class GraphReader {
         SimpleGraph g;
 //        g = graphReader("Bipartite/g1.txt");
 //        g = graphReader("FixedDegree/20v-3out-4min-355max.txt");
-        g = graphReader("Mesh/smallMesh.txt");
+        g = readGraph("Mesh/smallMesh.txt");
 //        g = graphReader("Random/n10-m10-cmin5-cmax10-f30.txt");
         System.out.println("Vertices: " + g.numVertices());
         System.out.println("Edges: " + g.numEdges());
