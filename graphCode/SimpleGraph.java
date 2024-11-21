@@ -17,10 +17,13 @@ public class SimpleGraph {
     LinkedList vertexList;
     LinkedList edgeList;
 
+    Map<String, Vertex> vertexMap;
+
     // Constructor
     public SimpleGraph() {
         this.vertexList = new LinkedList();
         this.edgeList = new LinkedList();
+        this.vertexMap = new HashMap();
     }
     
     /**
@@ -69,6 +72,8 @@ public class SimpleGraph {
         Vertex v;
         v = new Vertex(data, name);
         vertexList.addLast(v);
+
+        vertexMap.put((String)name, v);
         return v;
     }
 
@@ -127,6 +132,15 @@ public class SimpleGraph {
     public int numEdges() {
         return edgeList.size();
     }
+
+
+    /**
+     * @param name the name of the Vertex
+     * @return If the vertex is already in the graph
+     */
+    public boolean containsVertex(String name) {
+        return vertexMap.containsKey(name);
+    };
 
     /**
      * Code to test the correctness of the SimpleGraph methods.
