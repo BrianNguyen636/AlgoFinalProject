@@ -2,6 +2,12 @@ import java.io.BufferedReader;
 
 public class GraphReader {
 
+    /**
+     * Takes the file path from within the graphGenerationCode directory and returns
+     * the generated SimpleGraph
+     * @param filepath folder/graph.txt
+     * @return SimpleGraph constructed from the text.
+     */
     public static SimpleGraph graphReader(String filepath) {
         SimpleGraph graph = new SimpleGraph();
         String path = "graphGenerationCode/graphGenerationCode/";
