@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.List;
+
 public class FordFulkerson {
 
     public static SimpleGraph buildResidual(SimpleGraph graph) {
@@ -43,9 +46,35 @@ public class FordFulkerson {
         return residual;
     }
 
+    public static List<Vertex> augment(SimpleGraph residual) {
+        List<Vertex> path = new LinkedList<>();
+        path = dfsAugment(residual.aVertex(), path);
+        return path;
+    }
+    public static List<Vertex> dfsAugment(Vertex v, List<Vertex> path) {
+        path.add(v);
+        if (v.getName().equals("t")) {
+            return path;
+        }
+        for (Object e : v.incidentEdgeList) {
+            Edge edge = (Edge)e;
+            Vertex v1 = edge.getFirstEndpoint();
+            Vertex v2 = edge.getSecondEndpoint();
+            if (v1 == v) {
+                EdgeData data = (EdgeData) edge.getData();
+                if (data.flow < data.capacity && !path.contains(v2)) {
+                    path = dfsAugment(v2, path);
+                }
+            }
+        }
+        return path;
+    }
+
     public static void main(String[] args) {
         SimpleGraph residual = buildResidual(GraphReader.readGraph("test.txt"));
         System.out.println("Vertices:" + residual.numVertices());
         System.out.println("Edges:" + residual.numEdges());
+        List<Vertex> augment = augment(residual);
+        System.out.println(augment);
     }
 }
