@@ -48,13 +48,13 @@ public class FordFulkerson {
 
     public static List<Vertex> augment(SimpleGraph residual) {
         List<Vertex> path = new LinkedList<>();
-        path = dfsAugment(residual.aVertex(), path);
-        return path;
+        if (dfsAugment(residual.aVertex(), path)) return path;
+        else return null;
     }
-    public static List<Vertex> dfsAugment(Vertex v, List<Vertex> path) {
+    public static boolean dfsAugment(Vertex v, List<Vertex> path) {
         path.add(v);
         if (v.getName().equals("t")) {
-            return path;
+            return true;
         }
         for (Object e : v.incidentEdgeList) {
             Edge edge = (Edge)e;
@@ -63,11 +63,13 @@ public class FordFulkerson {
             if (v1 == v) {
                 EdgeData data = (EdgeData) edge.getData();
                 if (data.flow < data.capacity && !path.contains(v2)) {
-                    path = dfsAugment(v2, path);
+                    if (dfsAugment(v2, path)) {
+                        return true;
+                    }
                 }
             }
         }
-        return path;
+        return false;
     }
 
     public static void main(String[] args) {
