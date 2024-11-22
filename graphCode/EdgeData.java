@@ -1,10 +1,8 @@
 class EdgeData {
-    int forwardsFlow;
-    int backwardsFlow;
+    int flow;
     int capacity;
-    public EdgeData(int f, int b, int c) {
-        forwardsFlow = f;
-        backwardsFlow = b;
+    public EdgeData(int f, int c) {
+        flow = f;
         capacity = c;
     }
 }

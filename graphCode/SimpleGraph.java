@@ -77,6 +77,12 @@ public class SimpleGraph {
         return v;
     }
 
+    public Vertex insertVertex(Vertex v) {
+        vertexList.addLast(v);
+        vertexMap.put((String)v.getName(), v);
+        return v;
+    }
+
     /**
      * Add an edge to this graph.
      * @param v  the first endpoint of the edge

@@ -19,7 +19,7 @@ public class GraphReader {
                 String vertex1, vertex2;
                 int value;
 
-                if (graphType.equals("Bipartite")) {
+                if (graphType.equalsIgnoreCase("bipartite")) {
                     String[] split = line.split("\t");
                     vertex1 = split[1];
                     vertex2 = split[2];
@@ -46,7 +46,7 @@ public class GraphReader {
                 }
 
                 graph.insertEdge(v1, v2,
-                        new EdgeData(0,0,value),
+                        new EdgeData(0,value),
                         vertex1 + "-" + vertex2);
             }
         } catch (Exception e) {

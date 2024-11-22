@@ -1,0 +1,5 @@
+s u 2
+s v 4
+u v 6
+u t 4
+v t 2
