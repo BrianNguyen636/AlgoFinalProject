@@ -1,6 +1,4 @@
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class FordFulkerson {
 
@@ -54,7 +52,11 @@ public class FordFulkerson {
      */
     public static List<Vertex> augmentingPath(SimpleGraph residual) {
         List<Vertex> path = new LinkedList<>();
-        if (dfsAugment(residual.aVertex(), path)) return path;
+        Vertex source = residual.aVertex();
+        path.add(source);
+        Set<Vertex> visited = new HashSet<>();
+        visited.add(source);
+        if (dfsAugment(source, path, visited)) return path;
         else return null;
 
 //        List<String> strPath = bfsAugment(residual);
@@ -71,27 +73,27 @@ public class FordFulkerson {
      * @param path the path built so far
      * @return True or False the target can be reached.
      */
-    public static boolean dfsAugment(Vertex v, List<Vertex> path) {
+    public static boolean dfsAugment(Vertex v, List<Vertex> path, Set<Vertex> visited) {
 //        System.out.println("Visiting:" + v.getName());
-        path.add(v);
-        if (v.getName().equals("t")) return true;
+
+        if (v.getName().equals("t")) {
+            return true;
+        }
 
         for (Object e : v.incidentEdgeList) {
             Edge edge = (Edge)e;
+            EdgeData data = (EdgeData) edge.getData();
             Vertex v1 = edge.getFirstEndpoint();
             Vertex v2 = edge.getSecondEndpoint();
-            if (v1 == v) {
-                EdgeData data = (EdgeData) edge.getData();
+            if (v1 == v && data.capacity - data.flow > 0 && visited.add(v2)) {
 //                System.out.println("Edge: " + edge.getName());
 //                System.out.println("Flow:"+ (int)(data.capacity - data.flow));
-                if (data.capacity - data.flow > 0 && !path.contains(v2)) {
-                    if (dfsAugment(v2, path)) {
-                        return true;
-                    }
+                path.add(v2);
+                if (dfsAugment(v2, path, visited)) {
+                    return true;
                 }
             }
         }
-        //If vertex does not lead to the target
         path.removeLast();
         return false;
     }
@@ -153,19 +155,22 @@ public class FordFulkerson {
     }
     public static int augment(SimpleGraph graph, SimpleGraph residual) {
 
+        System.out.println("Finding augment");
         List<Vertex> path = augmentingPath(residual);
 
         if (path == null) return 0;
 
 //        System.out.print("Path: ");
 //        for (Vertex v : path) {
-//            System.out.print((v.getName()));
+//            System.out.print((","+v.getName()));
 //        }
 //        System.out.println();
 
+        System.out.println("Finding bottleneck");
         int flow = findBottleneck(path, residual);
         Vertex graphVertex = graph.aVertex();
 
+        System.out.println("Modifying graphs");
         for (int i = 1; i < path.size(); i++) {
             Vertex v = path.get(i);
             String v1name = (String)graphVertex.getName();
@@ -195,6 +200,7 @@ public class FordFulkerson {
             graphVertex = v;
 
         }
+        System.out.println(flow + " flow added");
         return flow;
     }
 
@@ -206,7 +212,7 @@ public class FordFulkerson {
         int maxflow = 0;
         int flow = augment(graph, residual);
         while (flow != 0) {
-//            System.out.println("Flow:"+flow);
+            System.out.println("Flow:"+flow);
             maxflow += flow;
 //            Thread.sleep(1000);
             flow = augment(graph, residual);
@@ -225,8 +231,8 @@ public class FordFulkerson {
 //        System.out.println(fordFulkerson("test2.txt"));
 
 //        System.out.println(fordFulkerson("bipartite/g1.txt"));
-        System.out.println(fordFulkerson("bipartite/g2.txt"));
+//        System.out.println(fordFulkerson("bipartite/g2.txt"));
 //        System.out.println(fordFulkerson("FixedDegree/20v-3out-4min-355max.txt"));
-//        System.out.println(fordFulkerson("FixedDegree/100v-5out-25min-200max.txt"));
+        System.out.println(fordFulkerson("FixedDegree/100v-5out-25min-200max.txt"));
     }
 }
