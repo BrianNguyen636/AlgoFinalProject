@@ -112,17 +112,17 @@ public class FordFulkerson {
         }
         return min;
     }
-    public static int augment(SimpleGraph graph) {
-        SimpleGraph residual = buildResidual(graph);
+    public static int augment(SimpleGraph graph, SimpleGraph residual) {
+
         List<Vertex> path = augmentingPath(residual);
 
         if (path == null) return 0;
 
-        System.out.print("Path: ");
-        for (Vertex v : path) {
-            System.out.print((v.getName()));
-        }
-        System.out.println();
+//        System.out.print("Path: ");
+//        for (Vertex v : path) {
+//            System.out.print((v.getName()));
+//        }
+//        System.out.println();
 
         int flow = findBottleneck(path, residual);
         Vertex graphVertex = graph.aVertex();
@@ -132,6 +132,7 @@ public class FordFulkerson {
             String v1name = (String)graphVertex.getName();
             String v2name = (String)v.getName();
 
+            //Graph
             Edge e;
             if (graph.edgeMap.containsKey((v1name + "-" + v2name))) { //Forward edge
                 e = graph.edgeMap.get(v1name+"-"+v2name);
@@ -142,46 +143,41 @@ public class FordFulkerson {
                 EdgeData data = (EdgeData) e.getData();
                 e.setData(new EdgeData(data.flow - flow, data.capacity));
             }
+            //Residual graph
+            //Forward Edge
+            Edge resF = residual.edgeMap.get(v1name+"-"+v2name);
+            EdgeData dataF = (EdgeData) resF.getData();
+            resF.setData(new EdgeData(0, dataF.capacity - flow));
+            //Backwards Edge
+            Edge resB = residual.edgeMap.get(v2name+"-"+v1name);
+            EdgeData data2 = (EdgeData) resB.getData();
+            resB.setData(new EdgeData(0, data2.capacity + flow));
+
             graphVertex = v;
 
-
-//            for (Object e : graphVertex.incidentEdgeList) {
-//                Vertex v1 = ((Edge)e).getFirstEndpoint();
-//                Vertex v2 = ((Edge)e).getSecondEndpoint();
-//                if (v1 == graphVertex && v2 == v) {
-//                    EdgeData data = (EdgeData) ((Edge)e).getData();
-//                    ((Edge) e).setData(new EdgeData(flow, data.capacity));
-//                    graphVertex = v2;
-//                    break;
-//                }
-//            }
         }
         return flow;
     }
 
     public static int fordFulkerson(String filepath) {
+
         SimpleGraph graph = GraphReader.readGraph(filepath);
-//        SimpleGraph residual = buildResidual(graph);
-
-//        System.out.println("Vertices: " + graph.numVertices());
-//        System.out.println("Edges: " + graph.numEdges());
-//        System.out.println("Vertices:" + residual.numVertices());
-//        System.out.println("Edges:" + residual.numEdges());
-
-//        List<Vertex> augment = augmentingPath(residual);
-//        System.out.println(findBottleneck(augment));
+        SimpleGraph residual = buildResidual(graph);
 
         int maxflow = 0;
-        int flow = augment(graph);
+        int flow = augment(graph, residual);
         while (flow != 0) {
-            System.out.println("Flow:"+flow);
+//            System.out.println("Flow:"+flow);
             maxflow += flow;
 //            Thread.sleep(1000);
-            flow = augment(graph);
+            flow = augment(graph, residual);
         }
         return maxflow;
     }
     public static void main(String[] args){
-        System.out.println(fordFulkerson("bipartite/g2.txt"));
+//        System.out.println(fordFulkerson("bipartite/g1.txt"));
+//        System.out.println(fordFulkerson("bipartite/g2.txt"));
+        System.out.println(fordFulkerson("FixedDegree/20v-3out-4min-355max.txt"));
+//        System.out.println(fordFulkerson("FixedDegree/100v-5out-25min-200max.txt"));
     }
 }
