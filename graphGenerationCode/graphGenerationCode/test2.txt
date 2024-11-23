@@ -1,8 +1,8 @@
 s a 9
 s c 9
 a b 7
-b c 6
-b t 8
+b c 5
+b t 5
 c a 8
 c d 10
 d t 12

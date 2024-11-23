@@ -14,16 +14,19 @@ import java.util.*;
  */
 public class SimpleGraph {
 
+
     LinkedList vertexList;
     LinkedList edgeList;
 
     Map<String, Vertex> vertexMap;
+    Map<String, Edge> edgeMap;
 
     // Constructor
     public SimpleGraph() {
         this.vertexList = new LinkedList();
         this.edgeList = new LinkedList();
         this.vertexMap = new HashMap();
+        this.edgeMap = new HashMap();
     }
     
     /**
@@ -97,6 +100,8 @@ public class SimpleGraph {
         edgeList.addLast(e);
         v.incidentEdgeList.addLast(e);
         w.incidentEdgeList.addLast(e);
+
+        edgeMap.put((String)name, e);
         return e;
     }
 
