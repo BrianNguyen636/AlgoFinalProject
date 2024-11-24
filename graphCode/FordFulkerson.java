@@ -155,54 +155,16 @@ public class FordFulkerson {
         return maxflow;
     }
     public static void main(String[] args){
-//        SimpleGraph graph = GraphReader.readGraph("test2.txt");
-//        List<String> path = bfsAugment(buildResidual(graph));
-//        if (path == null) System.out.println("null");
-//        for (String s : path) {
-//            System.out.print(s);
-//        }
-//        System.out.println();
-//
+
 //        System.out.println(fordFulkerson("test2.txt"));
 
 //        System.out.println(fordFulkerson("bipartite/g1.txt"));
 //        System.out.println(fordFulkerson("bipartite/g2.txt"));
 //        System.out.println(fordFulkerson("FixedDegree/20v-3out-4min-355max.txt"));
-        System.out.println(fordFulkerson("FixedDegree/100v-5out-25min-200max.txt"));
+//        System.out.println(fordFulkerson("FixedDegree/100v-5out-25min-200max.txt"));
 //        System.out.println(fordFulkerson("Mesh/smallMesh.txt"));
-//        System.out.println(fordFulkerson("Mesh/mediumMesh.txt"));
-//        System.out.println(fordFulkerson("Random/n10-m10-cmin5-cmax10-f30.txt"));
+        System.out.println(fordFulkerson("Mesh/mediumMesh.txt"));
+        System.out.println(fordFulkerson("Random/n10-m10-cmin5-cmax10-f30.txt"));
 //        System.out.println(fordFulkerson("Random/n100-m100-cmin10-cmax20-f949.txt"));
     }
 }
-//public static List<String> bfsAugment(SimpleGraph residual) {
-//    Vertex v = residual.aVertex();
-//    List<String> path = new LinkedList<>();
-//    path.add((String)v.getName());
-//    Queue<List<String>> queue = new LinkedList<>();
-//    queue.add(path);
-//    while (queue.size() != 0) {
-//        List<String> p = queue.poll();
-//        Vertex vert = residual.vertexMap.get(p.getLast());
-//        if (vert.getName().equals("t")) {
-//            return p;
-//        }
-//        for (Object e : vert.incidentEdgeList) {
-//            Edge edge = (Edge)e;
-//            Vertex v1 = edge.getFirstEndpoint();
-//            Vertex v2 = edge.getSecondEndpoint();
-//            if (v1 == vert) {
-//                EdgeData data = (EdgeData) edge.getData();
-////                System.out.println("Edge: " + edge.getName());
-////                System.out.println("Flow:"+ (int)(data.capacity - data.flow));
-//                if (data.capacity - data.flow > 0 && !p.contains((String)v2.getName())) {
-//                    List<String> next = new LinkedList<>(p);
-//                    next.add((String)v2.getName());
-//                    queue.add(next);
-//                }
-//            }
-//        }
-//
-//    }
-//    return null;
-//}
