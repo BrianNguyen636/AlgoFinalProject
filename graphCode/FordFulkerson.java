@@ -29,16 +29,27 @@ public class FordFulkerson {
                 v2res = residual.vertexMap.get((String)v2.getName());
             }
 
-            //Inserting forwards edge
-            residual.insertEdge(v1res, v2res,
-                new EdgeData(0, eData.capacity-eData.flow),
-                v1.getName() + "-" + v2.getName()
-            );
+            if (!residual.edgeMap.containsKey(v1.getName() + "-" + v2.getName())) {
+                //Inserting forwards edge
+                Edge e1 = residual.insertEdge(v1res, v2res,
+                        new EdgeData(0, eData.capacity-eData.flow),
+                        v1.getName() + "-" + v2.getName()
+                );
+            } else {
+                Edge e1 = residual.edgeMap.get(v1.getName() + "-" + v2.getName());
+                e1.setData(new EdgeData(0, eData.capacity-eData.flow));
+            }
+            if (!residual.edgeMap.containsKey(v2.getName() + "-" + v1.getName())) {
+                Edge e2 = residual.insertEdge(v2res, v1res,
+                        new EdgeData(0, eData.flow),
+                        v2.getName() + "-" + v1.getName()
+                );
+            } else {
+                Edge e2 = residual.edgeMap.get(v2.getName() + "-" + v1.getName());
+                e2.setData(new EdgeData(0, eData.capacity-eData.flow));
+            }
 
-            residual.insertEdge(v2res, v1res,
-                    new EdgeData(0, eData.flow),
-                    v2.getName() + "-" + v1.getName()
-            );
+//            System.out.println();
         }
         return residual;
     }
@@ -102,17 +113,30 @@ public class FordFulkerson {
 
         if (path == null) return 0;
 
+
+        System.out.print("Path: ");
+        for (Object o : path) {
+            Edge e = (Edge)o;
+            System.out.print(e.getName() + ",");
+        }
+        System.out.println();
+        for (Object o : path) {
+            Edge e = (Edge)o;
+            EdgeData d = (EdgeData) e.getData();
+            System.out.print(d.capacity + ",");
+        }
+        System.out.println();
+
 //        System.out.println("---Finding bottleneck");
         int flow = findBottleneck(path, residual);
-        Vertex graphVertex = graph.aVertex();
-
+//
 //        System.out.println("---Modifying graphs");
         for (int i = 0; i < path.size(); i++) {
             Edge edge = (Edge) path.get(i);
             String v1name = (String)edge.getFirstEndpoint().getName();
             String v2name = (String)edge.getSecondEndpoint().getName();
 
-            //Graph
+//            Graph
             Edge e;
             if (graph.edgeMap.containsKey((v1name + "-" + v2name))) { //Forward edge
                 e = graph.edgeMap.get(v1name+"-"+v2name);
@@ -125,6 +149,7 @@ public class FordFulkerson {
             }
             //Residual graph
             //Forward Edge
+
             Edge resF = residual.edgeMap.get(v1name+"-"+v2name);
             EdgeData dataF = (EdgeData) resF.getData();
             resF.setData(new EdgeData(0, dataF.capacity - flow));
@@ -133,25 +158,32 @@ public class FordFulkerson {
             EdgeData data2 = (EdgeData) resB.getData();
             resB.setData(new EdgeData(0, data2.capacity + flow));
 
-//            graphVertex = v;
-
         }
-//        System.out.println("---" + flow + " flow added");
+
+        for (Object o : path) {
+            Edge e = (Edge)o;
+            EdgeData d = (EdgeData) e.getData();
+            System.out.print(d.capacity + ",");
+        }
+        System.out.println();
+        System.out.println("---" + flow + " flow added");
+
         return flow;
     }
 
     public static int fordFulkerson(String filepath) {
-
+        long start = System.currentTimeMillis();
         SimpleGraph graph = GraphReader.readGraph(filepath);
         SimpleGraph residual = buildResidual(graph);
+
         int maxflow = 0;
         int flow = augment(graph, residual);
         while (flow != 0) {
-//            System.out.println("Flow:"+flow);
             maxflow += flow;
-//            Thread.sleep(1000);
             flow = augment(graph, residual);
         }
+        long totalTime = (System.currentTimeMillis() - start);
+        System.out.println("Time Elapsed: " + totalTime + "ms");
         return maxflow;
     }
     public static void main(String[] args){
@@ -162,8 +194,9 @@ public class FordFulkerson {
 //        System.out.println(fordFulkerson("bipartite/g2.txt"));
 //        System.out.println(fordFulkerson("FixedDegree/20v-3out-4min-355max.txt"));
 //        System.out.println(fordFulkerson("FixedDegree/100v-5out-25min-200max.txt"));
+
 //        System.out.println(fordFulkerson("Mesh/smallMesh.txt"));
-        System.out.println(fordFulkerson("Mesh/mediumMesh.txt"));
+//        System.out.println(fordFulkerson("Mesh/mediumMesh.txt"));
         System.out.println(fordFulkerson("Random/n10-m10-cmin5-cmax10-f30.txt"));
 //        System.out.println(fordFulkerson("Random/n100-m100-cmin10-cmax20-f949.txt"));
     }
