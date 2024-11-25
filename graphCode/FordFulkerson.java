@@ -2,6 +2,8 @@ import java.util.*;
 
 public class FordFulkerson {
 
+    static boolean DEBUG = false;
+
     /**
      * Takes a graph and builds a residual graph based on it
      * @param graph The SimpleGraph
@@ -49,7 +51,6 @@ public class FordFulkerson {
                 e2.setData(new EdgeData(0, eData.capacity-eData.flow));
             }
 
-//            System.out.println();
         }
         return residual;
     }
@@ -106,31 +107,8 @@ public class FordFulkerson {
         }
         return min;
     }
-    public static int augment(SimpleGraph graph, SimpleGraph residual) {
 
-//        System.out.println("---Finding augment");
-        List<Object> path = augmentingPath(residual);
-
-        if (path == null) return 0;
-
-
-        System.out.print("Path: ");
-        for (Object o : path) {
-            Edge e = (Edge)o;
-            System.out.print(e.getName() + ",");
-        }
-        System.out.println();
-        for (Object o : path) {
-            Edge e = (Edge)o;
-            EdgeData d = (EdgeData) e.getData();
-            System.out.print(d.capacity + ",");
-        }
-        System.out.println();
-
-//        System.out.println("---Finding bottleneck");
-        int flow = findBottleneck(path, residual);
-//
-//        System.out.println("---Modifying graphs");
+    public static void modifyGraphEdges(SimpleGraph graph, SimpleGraph residual, List<Object> path, int flow) {
         for (int i = 0; i < path.size(); i++) {
             Edge edge = (Edge) path.get(i);
             String v1name = (String)edge.getFirstEndpoint().getName();
@@ -159,15 +137,45 @@ public class FordFulkerson {
             resB.setData(new EdgeData(0, data2.capacity + flow));
 
         }
+    }
 
-        for (Object o : path) {
-            Edge e = (Edge)o;
-            EdgeData d = (EdgeData) e.getData();
-            System.out.print(d.capacity + ",");
+    public static int augment(SimpleGraph graph, SimpleGraph residual) {
+
+//        System.out.println("---Finding augment");
+        List<Object> path = augmentingPath(residual);
+
+        if (path == null) return 0;
+
+        if (DEBUG) {
+            System.out.print("Path: ");
+            for (Object o : path) {
+                Edge e = (Edge)o;
+                System.out.print(e.getName() + ",");
+            }
+            System.out.println();
+            for (Object o : path) {
+                Edge e = (Edge)o;
+                EdgeData d = (EdgeData) e.getData();
+                System.out.print(d.capacity + ",");
+            }
+            System.out.println();
         }
-        System.out.println();
-        System.out.println("---" + flow + " flow added");
 
+//        System.out.println("---Finding bottleneck");
+        int flow = findBottleneck(path, residual);
+//
+//        System.out.println("---Modifying graphs");
+        modifyGraphEdges(graph, residual, path, flow);
+
+        if (DEBUG) {
+            for (Object o : path) {
+                Edge e = (Edge)o;
+                EdgeData d = (EdgeData) e.getData();
+                System.out.print(d.capacity + ",");
+            }
+            System.out.println();
+            System.out.println("---" + flow + " flow added");
+        }
         return flow;
     }
 
@@ -193,11 +201,11 @@ public class FordFulkerson {
 //        System.out.println(fordFulkerson("bipartite/g1.txt"));
 //        System.out.println(fordFulkerson("bipartite/g2.txt"));
 //        System.out.println(fordFulkerson("FixedDegree/20v-3out-4min-355max.txt"));
-//        System.out.println(fordFulkerson("FixedDegree/100v-5out-25min-200max.txt"));
+        System.out.println(fordFulkerson("FixedDegree/100v-5out-25min-200max.txt"));
 
 //        System.out.println(fordFulkerson("Mesh/smallMesh.txt"));
 //        System.out.println(fordFulkerson("Mesh/mediumMesh.txt"));
-        System.out.println(fordFulkerson("Random/n10-m10-cmin5-cmax10-f30.txt"));
+//        System.out.println(fordFulkerson("Random/n10-m10-cmin5-cmax10-f30.txt"));
 //        System.out.println(fordFulkerson("Random/n100-m100-cmin10-cmax20-f949.txt"));
     }
 }

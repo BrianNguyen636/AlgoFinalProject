@@ -1,2 +1,98 @@
-public class CapacityScaling {
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+public class CapacityScaling extends FordFulkerson {
+
+    public static int findDelta(SimpleGraph graph) {
+        int delta = 1;
+        for (Object obj: graph.edgeList) {
+            Edge e = (Edge) obj;
+            EdgeData edgeData = (EdgeData) e.getData();
+            if (edgeData.capacity >= delta * 2) {
+                delta *= 2;
+            }
+        }
+        return delta;
+    }
+    public static List<Object> augmentingPath(SimpleGraph residual, int delta) {
+        List<Object> path = new LinkedList<>();
+        Vertex source = residual.aVertex();
+        Set<Vertex> visited = new HashSet<>();
+        visited.add(source);
+        if (dfsAugment(source, path, visited, delta)) return path;
+        else return null;
+    }
+    public static boolean dfsAugment(Vertex v, List<Object> path, Set<Vertex> visited, int delta) {
+        if (v.getName().equals("t")) {
+            return true;
+        }
+
+        for (Object e : v.incidentEdgeList) {
+            Edge edge = (Edge)e;
+            EdgeData data = (EdgeData) edge.getData();
+            Vertex v1 = edge.getFirstEndpoint();
+            Vertex v2 = edge.getSecondEndpoint();
+//            System.out.println(edge.getName());
+//            System.out.println(((EdgeData) edge.getData()).capacity);
+            if (v1 == v && data.flow < data.capacity && visited.add(v2)
+                    && data.capacity - data.flow >= delta) {
+                path.add(e);
+                if (dfsAugment(v2, path, visited)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static int augment(SimpleGraph graph, SimpleGraph residual, int delta) {
+
+//        System.out.println("---Finding augment");
+        List<Object> path = augmentingPath(residual, delta);
+        if (path == null) return 0;
+
+//        System.out.println("---Finding bottleneck");
+        int flow = findBottleneck(path, residual);
+//
+//        System.out.println("---Modifying graphs");
+        modifyGraphEdges(graph, residual, path, flow);
+        return flow;
+    }
+
+    public static int capScaling(String filepath) {
+        long start = System.currentTimeMillis();
+        SimpleGraph graph = GraphReader.readGraph(filepath);
+        SimpleGraph residual = buildResidual(graph);
+        int delta = findDelta(graph);
+        int maxflow = 0;
+        int flow = augment(graph, residual, delta);
+        while (delta >= 1) {
+            if (flow == 0) {
+                delta /=2;
+            } else {
+                maxflow += flow;
+            }
+            flow = augment(graph, residual, delta);
+        }
+        long totalTime = (System.currentTimeMillis() - start);
+        System.out.println("Time Elapsed: " + totalTime + "ms");
+        return maxflow;
+    }
+    public static void main(String[] args) {
+//        System.out.println(capScaling("test2.txt"));
+//
+//        System.out.println(capScaling("bipartite/g1.txt"));
+//        System.out.println(capScaling("bipartite/g2.txt"));
+//        System.out.println(capScaling("FixedDegree/20v-3out-4min-355max.txt"));
+        System.out.println(capScaling("FixedDegree/100v-5out-25min-200max.txt"));
+
+
+
+//        System.out.println(capScaling("Mesh/smallMesh.txt"));
+//        System.out.println(capScaling("Mesh/mediumMesh.txt"));
+//        System.out.println(capScaling("Random/n10-m10-cmin5-cmax10-f30.txt"));
+//        System.out.println(capScaling("Random/n100-m100-cmin10-cmax20-f949.txt"));
+    }
 }
