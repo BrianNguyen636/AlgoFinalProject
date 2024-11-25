@@ -5,6 +5,11 @@ import java.util.Set;
 
 public class CapacityScaling extends FordFulkerson {
 
+    /**
+     * Finds the delta value for a graph's edges
+     * @param graph The graph
+     * @return value of delta
+     */
     public static int findDelta(SimpleGraph graph) {
         int delta = 1;
         for (Object obj: graph.edgeList) {
@@ -16,6 +21,13 @@ public class CapacityScaling extends FordFulkerson {
         }
         return delta;
     }
+
+    /**
+     * Ford Fulkerson augmenting path method modified with delta value
+     * @param residual Residual graph
+     * @param delta The delta value
+     * @return The augmenting path of edges
+     */
     public static List<Object> augmentingPath(SimpleGraph residual, int delta) {
         List<Object> path = new LinkedList<>();
         Vertex source = residual.aVertex();
@@ -24,6 +36,15 @@ public class CapacityScaling extends FordFulkerson {
         if (dfsAugment(source, path, visited, delta)) return path;
         else return null;
     }
+
+    /**
+     * Modified dfs algorithm to find an augmenting path with capacities less than delta
+     * @param v The current vertex
+     * @param path The path of edges so far
+     * @param visited all Vertexes visited
+     * @param delta The delta to check edges
+     * @return boolean if path can be found
+     */
     public static boolean dfsAugment(Vertex v, List<Object> path, Set<Vertex> visited, int delta) {
         if (v.getName().equals("t")) {
             return true;

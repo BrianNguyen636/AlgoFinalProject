@@ -73,6 +73,7 @@ public class FordFulkerson {
      * Recursive helper for augmentingPath()
      * @param v vertex searched
      * @param path the path of edges built so far
+     * @param visited All vertices visited so far.
      * @return True or False the target can be reached.
      */
     public static boolean dfsAugment(Vertex v, List<Object> path, Set<Vertex> visited) {
@@ -95,6 +96,12 @@ public class FordFulkerson {
         return false;
     }
 
+    /**
+     * Finds the bottleneck in a path
+     * @param path The path of edges
+     * @param residual The residual graph the path follows
+     * @return The value of the bottleneck
+     */
     public static int findBottleneck(List<Object> path, SimpleGraph residual) {
 
         int min = Integer.MAX_VALUE;
@@ -108,6 +115,13 @@ public class FordFulkerson {
         return min;
     }
 
+    /**
+     * Given a flow value, an augmenting path, a graph, and it's residual, modify the graphs edges
+     * @param graph The original graph
+     * @param residual The residual graph
+     * @param path The augmenting path
+     * @param flow The flow value used
+     */
     public static void modifyGraphEdges(SimpleGraph graph, SimpleGraph residual, List<Object> path, int flow) {
         for (int i = 0; i < path.size(); i++) {
             Edge edge = (Edge) path.get(i);
@@ -139,6 +153,12 @@ public class FordFulkerson {
         }
     }
 
+    /**
+     * Adds flow based on an augmenting path in the given graph and residual graph
+     * @param graph The graph
+     * @param residual The graph's residual
+     * @return The flow added to each graph
+     */
     public static int augment(SimpleGraph graph, SimpleGraph residual) {
 
 //        System.out.println("---Finding augment");
@@ -163,7 +183,7 @@ public class FordFulkerson {
 
 //        System.out.println("---Finding bottleneck");
         int flow = findBottleneck(path, residual);
-//
+
 //        System.out.println("---Modifying graphs");
         modifyGraphEdges(graph, residual, path, flow);
 
@@ -179,6 +199,11 @@ public class FordFulkerson {
         return flow;
     }
 
+    /**
+     * The algorithm to find the max flow of a graph
+     * @param filepath The filepath of the given graph
+     * @return The max flow of the graph
+     */
     public static int fordFulkerson(String filepath) {
         long start = System.currentTimeMillis();
         SimpleGraph graph = GraphReader.readGraph(filepath);
