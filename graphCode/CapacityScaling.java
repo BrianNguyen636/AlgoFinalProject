@@ -62,6 +62,8 @@ public class CapacityScaling extends FordFulkerson {
                 path.add(e);
                 if (dfsAugment(v2, path, visited)) {
                     return true;
+                } else {
+                    path.remove(e);
                 }
             }
         }
@@ -103,17 +105,17 @@ public class CapacityScaling extends FordFulkerson {
     }
     public static void main(String[] args) {
 //        System.out.println(capScaling("test2.txt"));
-//
+
 //        System.out.println(capScaling("bipartite/g1.txt"));
 //        System.out.println(capScaling("bipartite/g2.txt"));
 //        System.out.println(capScaling("FixedDegree/20v-3out-4min-355max.txt"));
-        System.out.println(capScaling("FixedDegree/100v-5out-25min-200max.txt"));
+//        System.out.println(capScaling("FixedDegree/100v-5out-25min-200max.txt"));
 
 
 
-//        System.out.println(capScaling("Mesh/smallMesh.txt"));
-//        System.out.println(capScaling("Mesh/mediumMesh.txt"));
-//        System.out.println(capScaling("Random/n10-m10-cmin5-cmax10-f30.txt"));
-//        System.out.println(capScaling("Random/n100-m100-cmin10-cmax20-f949.txt"));
+        System.out.println(capScaling("Mesh/smallMesh.txt"));
+        System.out.println(capScaling("Mesh/mediumMesh.txt"));
+        System.out.println(capScaling("Random/n10-m10-cmin5-cmax10-f30.txt"));
+        System.out.println(capScaling("Random/n100-m100-cmin10-cmax20-f949.txt"));
     }
 }

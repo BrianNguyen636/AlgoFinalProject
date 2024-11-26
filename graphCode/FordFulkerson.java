@@ -2,7 +2,7 @@ import java.util.*;
 
 public class FordFulkerson {
 
-    static boolean DEBUG = false;
+    static boolean DEBUG = true;
 
     /**
      * Takes a graph and builds a residual graph based on it
@@ -90,9 +90,12 @@ public class FordFulkerson {
                 path.add(e);
                 if (dfsAugment(v2, path, visited)) {
                     return true;
+                } else {
+                    path.remove(e);
                 }
             }
         }
+
         return false;
     }
 
@@ -226,7 +229,7 @@ public class FordFulkerson {
 //        System.out.println(fordFulkerson("bipartite/g1.txt"));
 //        System.out.println(fordFulkerson("bipartite/g2.txt"));
 //        System.out.println(fordFulkerson("FixedDegree/20v-3out-4min-355max.txt"));
-        System.out.println(fordFulkerson("FixedDegree/100v-5out-25min-200max.txt"));
+//        System.out.println(fordFulkerson("FixedDegree/100v-5out-25min-200max.txt"));
 
 //        System.out.println(fordFulkerson("Mesh/smallMesh.txt"));
 //        System.out.println(fordFulkerson("Mesh/mediumMesh.txt"));
