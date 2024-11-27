@@ -34,13 +34,13 @@ public class GraphReader {
                 //Get the two vertexes
                 Vertex v1;
                 if (!graph.containsVertex(vertex1)) {
-                    v1 = graph.insertVertex(null, vertex1);
+                    v1 = graph.insertVertex(new VertexData(0,0), vertex1);
                 } else {
                     v1 = graph.vertexMap.get(vertex1);
                 }
                 Vertex v2;
                 if (!graph.containsVertex(vertex2)) {
-                    v2 = graph.insertVertex(null, vertex2);
+                    v2 = graph.insertVertex(new VertexData(0,0), vertex2);
                 } else {
                     v2 = graph.vertexMap.get(vertex2);
                 }

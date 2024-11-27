@@ -2,7 +2,7 @@ import java.util.*;
 
 public class FordFulkerson {
 
-    static boolean DEBUG = true;
+    static boolean DEBUG = false;
 
     /**
      * Takes a graph and builds a residual graph based on it
@@ -226,14 +226,14 @@ public class FordFulkerson {
 
 //        System.out.println(fordFulkerson("test2.txt"));
 
-//        System.out.println(fordFulkerson("bipartite/g1.txt"));
-//        System.out.println(fordFulkerson("bipartite/g2.txt"));
-//        System.out.println(fordFulkerson("FixedDegree/20v-3out-4min-355max.txt"));
-//        System.out.println(fordFulkerson("FixedDegree/100v-5out-25min-200max.txt"));
+        System.out.println(fordFulkerson("bipartite/g1.txt"));
+        System.out.println(fordFulkerson("bipartite/g2.txt"));
+        System.out.println(fordFulkerson("FixedDegree/20v-3out-4min-355max.txt"));
+        System.out.println(fordFulkerson("FixedDegree/100v-5out-25min-200max.txt"));
 
-//        System.out.println(fordFulkerson("Mesh/smallMesh.txt"));
-//        System.out.println(fordFulkerson("Mesh/mediumMesh.txt"));
-//        System.out.println(fordFulkerson("Random/n10-m10-cmin5-cmax10-f30.txt"));
-//        System.out.println(fordFulkerson("Random/n100-m100-cmin10-cmax20-f949.txt"));
+        System.out.println(fordFulkerson("Mesh/smallMesh.txt"));
+        System.out.println(fordFulkerson("Mesh/mediumMesh.txt"));
+        System.out.println(fordFulkerson("Random/n10-m10-cmin5-cmax10-f30.txt"));
+        System.out.println(fordFulkerson("Random/n100-m100-cmin10-cmax20-f949.txt"));
     }
 }
