@@ -4,11 +4,13 @@ import java.util.Queue;
 public class PreflowPush {
     public static SimpleGraph preflow(SimpleGraph graph) {
         Vertex source = graph.aVertex();
-        source.setData(new VertexData(graph.numVertices(),Integer.MAX_VALUE));
+        source.setData(new VertexData(graph.numVertices(),0));
         for (Object obj : source.incidentEdgeList) {
             Edge e = (Edge) obj;
             EdgeData eData = (EdgeData) e.getData();
             eData.flow = eData.capacity;
+            VertexData vData = (VertexData) (e.getSecondEndpoint().getData());
+            vData.excess = eData.capacity;
         }
         return graph;
     }
@@ -26,49 +28,65 @@ public class PreflowPush {
         }
         vData.height = min + 1;
     }
-    private static void push(Queue<Vertex> queue) {
-        while (!queue.isEmpty()) {
-            Vertex v = queue.poll();
-            VertexData vData = (VertexData) v.getData();
-            for (Object obj : v.incidentEdgeList) {
-                Edge e = (Edge)obj;
-                EdgeData eData = (EdgeData) e.getData();
-                Vertex v2 = e.getSecondEndpoint();
-                VertexData targetData = (VertexData) v2.getData();
+    private static boolean push(Vertex v, Queue<Vertex> queue) {
+        boolean result = false;
+        VertexData vData = (VertexData) v.getData();
+        for (Object obj : v.incidentEdgeList) {
+            Edge e = (Edge)obj;
+            EdgeData eData = (EdgeData) e.getData();
+            Vertex v2 = e.getSecondEndpoint();
+            VertexData targetData = (VertexData) v2.getData();
 
-                //If target's height less than source height
-                if (targetData.height < vData.height) {
-                    //Sending flow down the edge
-                    int amount = eData.capacity - eData.flow;
-                    //If edge can not receive flow, continue.
-                    if (amount == 0) continue;
+            //If target's height less than source height
+            if (targetData.height < vData.height) {
+                //Sending flow down the edge
+                int amount = eData.capacity - eData.flow;
+                //If edge can not receive flow, continue.
+                if (amount == 0) continue;
 
-                    if (amount <= vData.excess) {
-                        eData.flow += amount;
-                        vData.excess -= amount;
-                    } else {
-                        eData.flow += vData.excess;
-                        vData.excess = 0;
-                    }
-                    targetData.excess = eData.flow;
-
-                    //Adding to queue
-                    queue.add(v2);
+                //Add flow to the excess
+                if (amount <= vData.excess) {
+                    eData.flow += amount;
+                    targetData.excess += amount;
+                    vData.excess -= amount;
                 } else {
-
-                    vData.height = targetData.height + 1;
-
+                    eData.flow += vData.excess;
+                    targetData.excess += vData.excess;
+                    vData.excess = 0;
                 }
-            }
-            if (vData.excess > 0) {
-
+                //Adding to queue
+                queue.add(v2);
+                result = true;
             }
         }
+        return result;
     }
     public static int preflowpush(String filepath) {
         int maxflow = 0;
         SimpleGraph graph = GraphReader.readGraph(filepath);
+        SimpleGraph residual = FordFulkerson.buildResidual(graph);
         preflow(graph);
+        preflow(residual);
+        Queue<Vertex> queue = new LinkedList<>();
+        queue.add(residual.aVertex());
+        while (!queue.isEmpty()) {
+            Vertex v = queue.poll();
+            if (!push(v, queue)) {
+                relabel(v);
+            }
+
+            if (queue.isEmpty()) {
+                for (Object o : residual.vertexList) {
+                    Vertex vertex = (Vertex) o;
+                    VertexData vertexData = (VertexData) vertex.getData();
+                    if (vertexData.excess > 0
+                        && !vertex.getName().equals("s")
+                        && !vertex.getName().equals("t")) {
+                        queue.add(vertex);
+                    }
+                }
+            }
+        }
         return maxflow;
     }
 
