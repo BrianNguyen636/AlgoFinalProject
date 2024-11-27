@@ -104,18 +104,20 @@ public class CapacityScaling extends FordFulkerson {
         return maxflow;
     }
     public static void main(String[] args) {
-//        System.out.println(capScaling("test2.txt"));
-
-//        System.out.println(capScaling("bipartite/g1.txt"));
-//        System.out.println(capScaling("bipartite/g2.txt"));
-//        System.out.println(capScaling("FixedDegree/20v-3out-4min-355max.txt"));
-//        System.out.println(capScaling("FixedDegree/100v-5out-25min-200max.txt"));
-
-
-
-        System.out.println(capScaling("Mesh/smallMesh.txt"));
-        System.out.println(capScaling("Mesh/mediumMesh.txt"));
-        System.out.println(capScaling("Random/n10-m10-cmin5-cmax10-f30.txt"));
-        System.out.println(capScaling("Random/n100-m100-cmin10-cmax20-f949.txt"));
+        String[] tests = {
+                "test.txt",
+                "test2.txt",
+                "Bipartite/g1.txt",
+                "Bipartite/g2.txt",
+                "FixedDegree/20v-3out-4min-355max.txt",
+                "FixedDegree/100v-5out-25min-200max.txt",
+                "Mesh/smallMesh.txt",
+                "Mesh/mediumMesh.txt",
+                "Random/n10-m10-cmin5-cmax10-f30.txt",
+                "Random/n100-m100-cmin10-cmax20-f949.txt"
+        };
+        for (String s : tests) {
+            System.out.println(capScaling(s));
+        }
     }
 }
