@@ -7,6 +7,12 @@ import java.util.Queue;
 public class PreflowPush {
     static boolean DEBUG = false;
 
+    /**
+     * Initializes the residual graph for the preflow algorithm, adding maxflow to the source's
+     * adjacent edges
+     * @param graph The resdiual graph
+     * @return The graph after adding the preflow
+     */
     public static SimpleGraph preflow(SimpleGraph graph) {
         Vertex source = graph.aVertex();
         source.setData(new VertexData(graph.numVertices(),0));
@@ -28,6 +34,10 @@ public class PreflowPush {
         return graph;
     }
 
+    /**
+     * Relabels the given vertex, so that height = min(height of adjacent vertices) + 1
+     * @param v The vertex to relabel
+     */
     public static void relabel(Vertex v) {
         VertexData vData = (VertexData) v.getData();
         int min = vData.height;
@@ -44,7 +54,14 @@ public class PreflowPush {
         if (DEBUG) System.out.println("Relabeling: " + v.getName());
         v.setData(new VertexData(min + 1, vData.excess));
     }
-    private static boolean push(Vertex v, Queue<Vertex> queue, SimpleGraph residual) {
+
+    /**
+     * Pushes flow down to all adjacent vertices with lesser height
+     * @param v The vertex to push flow from
+     * @param residual The residual graph
+     * @return True or False if flow can be pushed from vertex
+     */
+    private static boolean push(Vertex v, SimpleGraph residual) {
         boolean result = false;
         VertexData vData = (VertexData) v.getData();
 
@@ -55,6 +72,7 @@ public class PreflowPush {
             EdgeData eData = (EdgeData) e.getData();
             Vertex v2 = e.getSecondEndpoint();
             VertexData targetData = (VertexData) v2.getData();
+
             if (DEBUG) System.out.println("Checking edge " + e.getName() + ": " + eData.flow + "," + eData.capacity);
             if (DEBUG) System.out.println("h:" + targetData.height +",e:"+ targetData.excess);
 
@@ -76,18 +94,23 @@ public class PreflowPush {
                 EdgeData backData = (EdgeData) back.getData();
                 back.setData(new EdgeData(backData.flow, backData.capacity += amount));
 
-                //Adding to queue
-//                System.out.println("Adding " + v2.getName());
-//                queue.add(v2);
                 result = true;
             }
         }
         return result;
     }
+
+    /**
+     * Main function for the preflowpush algorithm for finding max flow
+     * @param filepath The filepath to the input graph
+     * @return int representing the maxflow value
+     */
     public static int preflowpush(String filepath) {
         long start = System.currentTimeMillis();
+
         SimpleGraph graph = GraphReader.readGraph(filepath);
         SimpleGraph residual = FordFulkerson.buildResidual(graph);
+        //Initalizing preflow, adding vertices adjacent to source to queue.
         preflow(residual);
         Queue<Vertex> queue = new LinkedList<>();
         for (Object o : residual.aVertex().incidentEdgeList) {
@@ -97,13 +120,13 @@ public class PreflowPush {
                 queue.add(v2);
             }
         }
+        //FIFO loop, while there exists vertex with excess flow.
         while (!queue.isEmpty()) {
             Vertex v = queue.poll();
-            if (!push(v, queue, residual)) {
+            if (!push(v, residual)) {
                 relabel(v);
             }
-
-
+            //Add all vertices with remaining excess
             if (queue.isEmpty()) {
                 for (Object o : residual.vertexList) {
                     Vertex vertex = (Vertex) o;
@@ -120,8 +143,10 @@ public class PreflowPush {
         //Get excess at sink
         Vertex sink = residual.vertexMap.get("t");
         VertexData vData = (VertexData) sink.getData();
+
         long totalTime = (System.currentTimeMillis() - start);
         System.out.println("Time Elapsed: " + totalTime + "ms");
+
         return vData.excess;
     }
 
