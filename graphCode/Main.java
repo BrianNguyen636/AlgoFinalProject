@@ -39,11 +39,6 @@ public class Main {
             avgTime = (double) timeSum / ITERATIONS;
             System.out.println("- Ford-Fulkerson:\t" + avgTime + " ms");
 
-            // start = System.currentTimeMillis();
-            // FordFulkerson.fordFulkerson(s);
-            // totalTime = (System.currentTimeMillis() - start);
-            // System.out.println("- Ford-Fulkerson:\t" + totalTime + " ms");
-
             timeSum = 0;
             for (int i = 0; i < ITERATIONS; i++) {
                 start = System.currentTimeMillis();
@@ -53,11 +48,6 @@ public class Main {
             }
             avgTime = (double) timeSum / ITERATIONS;
             System.out.println("- Capacity Scaling:\t" + avgTime + " ms");
-
-            // start = System.currentTimeMillis();
-            // CapacityScaling.capScaling(s);
-            // totalTime = (System.currentTimeMillis() - start);
-            // System.out.println("- Capacity Scaling:\t" + totalTime + " ms");
 
             timeSum = 0;
             for (int i = 0; i < ITERATIONS; i++) {
@@ -69,26 +59,8 @@ public class Main {
             avgTime = (double) timeSum / ITERATIONS;
             System.out.println("- Preflow Push:\t\t" + avgTime + " ms");
 
-            // start = System.currentTimeMillis();
-            // PreflowPush.preflowpush(s);
-            // totalTime = (System.currentTimeMillis() - start);
-            // System.out.println("- Preflow Push:\t\t" + totalTime + " ms");
-
             System.out.println();
         }
-
-
-        // System.out.println();
-        // System.out.println("### Testing Capacity Scaling ###");
-
-        // for (String s : tests) {   
-        //     System.out.println("input graph: " + s);
-        //     long start = System.currentTimeMillis();
-        //     CapacityScaling.capScaling(s);
-        //     long totalTime = (System.currentTimeMillis() - start);
-        //     System.out.println("Time Elapsed: " + totalTime + "ms");
-        //     System.out.println();
-        // }
         
     }
 }
