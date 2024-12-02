@@ -1,0 +1,26 @@
+Taking average time of 100 iterations.
+
+Input graph: Bipartite/100s_100t_0.5p_1min_10max.txt
+- Ford-Fulkerson:       50.79 ms
+- Capacity Scaling:     52.02 ms
+- Preflow Push:         6.13 ms
+
+Input graph: Bipartite/100s_100t_0.5p_1min_50max.txt
+- Ford-Fulkerson:       210.81 ms
+- Capacity Scaling:     220.32 ms
+- Preflow Push:         5.72 ms
+
+Input graph: FixedDegree/1000v_100e_1min_100max.txt
+- Ford-Fulkerson:       1126.91 ms
+- Capacity Scaling:     1061.36 ms
+- Preflow Push:         226.85 ms
+
+Input graph: Mesh/100r_100c_1cap.txt
+- Ford-Fulkerson:       296.95 ms
+- Capacity Scaling:     287.62 ms
+- Preflow Push:         50.04 ms
+
+Input graph: Random/n100-m100-cmin10-cmax20-f949.txt
+- Ford-Fulkerson:       134.84 ms
+- Capacity Scaling:     98.68 ms
+- Preflow Push:         42.79 ms
