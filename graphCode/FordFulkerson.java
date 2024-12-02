@@ -208,7 +208,6 @@ public class FordFulkerson {
      * @return The max flow of the graph
      */
     public static int fordFulkerson(String filepath) {
-        long start = System.currentTimeMillis();
         SimpleGraph graph = GraphReader.readGraph(filepath);
         SimpleGraph residual = buildResidual(graph);
 
@@ -218,8 +217,7 @@ public class FordFulkerson {
             maxflow += flow;
             flow = augment(graph, residual);
         }
-        long totalTime = (System.currentTimeMillis() - start);
-        System.out.println("Time Elapsed: " + totalTime + "ms");
+        
         return maxflow;
     }
     public static void main(String[] args){
@@ -237,7 +235,9 @@ public class FordFulkerson {
                 "Random/n100-m100-cmin10-cmax20-f949.txt"
         };
         for (String s : tests) {
+            System.out.println("input graph: " + s);
             System.out.println(fordFulkerson(s));
+            System.out.println();
         }
     }
 }

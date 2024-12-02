@@ -106,8 +106,6 @@ public class PreflowPush {
      * @return int representing the maxflow value
      */
     public static int preflowpush(String filepath) {
-        long start = System.currentTimeMillis();
-
         SimpleGraph graph = GraphReader.readGraph(filepath);
         SimpleGraph residual = FordFulkerson.buildResidual(graph);
         //Initalizing preflow, adding vertices adjacent to source to queue.
@@ -143,10 +141,7 @@ public class PreflowPush {
         //Get excess at sink
         Vertex sink = residual.vertexMap.get("t");
         VertexData vData = (VertexData) sink.getData();
-
-        long totalTime = (System.currentTimeMillis() - start);
-        System.out.println("Time Elapsed: " + totalTime + "ms");
-
+        
         return vData.excess;
     }
 
