@@ -3,17 +3,22 @@
 public class Main {
     public static void main(String[] args) {
         final int ITERATIONS = 100;
-
+        
         String[] tests = {
-                "test.txt",
-                "test2.txt",
-                "Bipartite/g1.txt",
-                "Bipartite/g2.txt",
-                "FixedDegree/20v-3out-4min-355max.txt",
-                "FixedDegree/100v-5out-25min-200max.txt",
-                "Mesh/smallMesh.txt",
-                "Mesh/mediumMesh.txt",
-                "Random/n10-m10-cmin5-cmax10-f30.txt",
+                // "test.txt",
+                // "test2.txt",
+                // "Bipartite/g1.txt",
+                // "Bipartite/g2.txt",
+                // "FixedDegree/20v-3out-4min-355max.txt",
+                // "FixedDegree/100v-5out-25min-200max.txt",
+                // "Mesh/smallMesh.txt",
+                // "Mesh/mediumMesh.txt",
+                // "Random/n10-m10-cmin5-cmax10-f30.txt",
+
+                "Bipartite/100s_100t_0.5p_1min_10max.txt",
+                "Bipartite/100s_100t_0.5p_1min_50max.txt",
+                "FixedDegree/1000v_100e_1min_100max.txt",
+                "Mesh/100r_100c_1cap.txt",
                 "Random/n100-m100-cmin10-cmax20-f949.txt"
         };
 
@@ -22,7 +27,6 @@ public class Main {
         long timeSum = 0;
         double avgTime = 0;
 
-        System.out.println();
         System.out.println("Taking average time of " + ITERATIONS + " iterations.");
         System.out.println();
                 

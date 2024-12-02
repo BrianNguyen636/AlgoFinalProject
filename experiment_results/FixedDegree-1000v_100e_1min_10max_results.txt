@@ -1,0 +1,6 @@
+Taking average time of 100 iterations.
+
+Input graph: FixedDegree/1000v_100e_1min_10max.txt
+- Ford-Fulkerson:       370.19 ms
+- Capacity Scaling:     361.67 ms
+- Preflow Push:         15276.47 ms
