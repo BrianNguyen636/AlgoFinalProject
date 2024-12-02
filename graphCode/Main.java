@@ -2,6 +2,7 @@
 
 public class Main {
     public static void main(String[] args) {
+        final int ITERATIONS = 100;
 
         String[] tests = {
                 "test.txt",
@@ -18,26 +19,60 @@ public class Main {
 
         long start = System.currentTimeMillis();
         long totalTime = (System.currentTimeMillis() - start);
+        long timeSum = 0;
+        double avgTime = 0;
 
+        System.out.println();
+        System.out.println("Taking average time of " + ITERATIONS + " iterations.");
         System.out.println();
                 
         for (String s : tests) {   
             System.out.println("Input graph: " + s);
 
-            start = System.currentTimeMillis();
-            FordFulkerson.fordFulkerson(s);
-            totalTime = (System.currentTimeMillis() - start);
-            System.out.println("- Ford-Fulkerson:\t" + totalTime + " ms");
+            timeSum = 0;
+            for (int i = 0; i < ITERATIONS; i++) {
+                start = System.currentTimeMillis();
+                FordFulkerson.fordFulkerson(s);
+                totalTime = (System.currentTimeMillis() - start);
+                timeSum += totalTime;
+            }
+            avgTime = (double) timeSum / ITERATIONS;
+            System.out.println("- Ford-Fulkerson:\t" + avgTime + " ms");
 
-            start = System.currentTimeMillis();
-            CapacityScaling.capScaling(s);
-            totalTime = (System.currentTimeMillis() - start);
-            System.out.println("- Capacity Scaling:\t" + totalTime + " ms");
+            // start = System.currentTimeMillis();
+            // FordFulkerson.fordFulkerson(s);
+            // totalTime = (System.currentTimeMillis() - start);
+            // System.out.println("- Ford-Fulkerson:\t" + totalTime + " ms");
 
-            start = System.currentTimeMillis();
-            PreflowPush.preflowpush(s);
-            totalTime = (System.currentTimeMillis() - start);
-            System.out.println("- Preflow Push:\t\t" + totalTime + " ms");
+            timeSum = 0;
+            for (int i = 0; i < ITERATIONS; i++) {
+                start = System.currentTimeMillis();
+                CapacityScaling.capScaling(s);
+                totalTime = (System.currentTimeMillis() - start);
+                timeSum += totalTime;
+            }
+            avgTime = (double) timeSum / ITERATIONS;
+            System.out.println("- Capacity Scaling:\t" + avgTime + " ms");
+
+            // start = System.currentTimeMillis();
+            // CapacityScaling.capScaling(s);
+            // totalTime = (System.currentTimeMillis() - start);
+            // System.out.println("- Capacity Scaling:\t" + totalTime + " ms");
+
+            timeSum = 0;
+            for (int i = 0; i < ITERATIONS; i++) {
+                start = System.currentTimeMillis();
+                PreflowPush.preflowpush(s);
+                totalTime = (System.currentTimeMillis() - start);
+                timeSum += totalTime;
+            }
+            avgTime = (double) timeSum / ITERATIONS;
+            System.out.println("- Preflow Push:\t\t" + avgTime + " ms");
+
+            // start = System.currentTimeMillis();
+            // PreflowPush.preflowpush(s);
+            // totalTime = (System.currentTimeMillis() - start);
+            // System.out.println("- Preflow Push:\t\t" + totalTime + " ms");
 
             System.out.println();
         }
