@@ -85,7 +85,6 @@ public class CapacityScaling extends FordFulkerson {
     }
 
     public static int capScaling(String filepath) {
-        long start = System.currentTimeMillis();
         SimpleGraph graph = GraphReader.readGraph(filepath);
         SimpleGraph residual = buildResidual(graph);
         int delta = findDelta(graph);
@@ -99,8 +98,6 @@ public class CapacityScaling extends FordFulkerson {
             }
             flow = augment(graph, residual, delta);
         }
-        long totalTime = (System.currentTimeMillis() - start);
-        System.out.println("Time Elapsed: " + totalTime + "ms");
         return maxflow;
     }
     public static void main(String[] args) {
