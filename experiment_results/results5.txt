@@ -1,0 +1,92 @@
+Taking average time of 100 iterations.
+
+Input graph: Bipartite/100s_100t_0.5p_1min_1max.txt
+- Ford-Fulkerson:	12.92 ms - (slowest)
+- Capacity Scaling:	9.78 ms
+- Preflow Push:		4.38 ms - (fastest)
+
+Input graph: Bipartite/100s_100t_0.5p_1min_10max.txt
+- Ford-Fulkerson:	45.37 ms - (fastest)
+- Capacity Scaling:	45.59 ms
+- Preflow Push:		125.26 ms - (slowest)
+
+Input graph: Bipartite/100s_100t_0.5p_1min_50max.txt
+- Ford-Fulkerson:	136.42 ms - (slowest)
+- Capacity Scaling:	131.15 ms
+- Preflow Push:		3.9 ms - (fastest)
+
+Input graph: Bipartite/100s_100t_0.5p_1min_100max.txt
+- Ford-Fulkerson:	319.32 ms - (slowest)
+- Capacity Scaling:	284.13 ms
+- Preflow Push:		129.97 ms - (fastest)
+
+Input graph: Bipartite/100s_100t_0.5p_1min_500max.txt
+- Ford-Fulkerson:	1458.04 ms - (slowest)
+- Capacity Scaling:	1025.49 ms
+- Preflow Push:		113.24 ms - (fastest)
+
+Input graph: Bipartite/100s_100t_0.5p_1min_1000max.txt
+- Ford-Fulkerson:	2923.86 ms - (slowest)
+- Capacity Scaling:	2083.2 ms
+- Preflow Push:		4.28 ms - (fastest)
+
+Input graph: FixedDegree/1000v_100e_1min_1max.txt
+- Ford-Fulkerson:	166.63 ms
+- Capacity Scaling:	166.53 ms - (fastest)
+- Preflow Push:		171.56 ms - (slowest)
+
+Input graph: FixedDegree/1000v_100e_1min_10max.txt
+- Ford-Fulkerson:	229.86 ms - (slowest)
+- Capacity Scaling:	221.84 ms
+- Preflow Push:		195.03 ms - (fastest)
+
+Input graph: FixedDegree/1000v_100e_1min_50max.txt
+- Ford-Fulkerson:	614.04 ms
+- Capacity Scaling:	600.75 ms - (fastest)
+- Preflow Push:		15301.84 ms - (slowest)
+
+Input graph: FixedDegree/1000v_100e_1min_100max.txt
+- Ford-Fulkerson:	594.29 ms
+- Capacity Scaling:	598.35 ms - (slowest)
+- Preflow Push:		199.25 ms - (fastest)
+
+Input graph: FixedDegree/1000v_100e_1min_500max.txt
+- Ford-Fulkerson:	3468.14 ms
+- Capacity Scaling:	3380.27 ms - (fastest)
+- Preflow Push:		16772.01 ms - (slowest)
+
+Input graph: FixedDegree/1000v_100e_1min_1000max.txt
+- Ford-Fulkerson:	3650.29 ms - (slowest)
+- Capacity Scaling:	3014.41 ms
+- Preflow Push:		196.36 ms - (fastest)
+
+Input graph: Mesh/50r_50c_1cap.txt
+- Ford-Fulkerson:	23.5 ms
+- Capacity Scaling:	23.92 ms - (slowest)
+- Preflow Push:		8.94 ms - (fastest)
+
+Input graph: Mesh/50r_50c_10cap.txt
+- Ford-Fulkerson:	93.99 ms - (fastest)
+- Capacity Scaling:	104.03 ms
+- Preflow Push:		4329.37 ms - (slowest)
+
+Input graph: Mesh/50r_50c_50cap.txt
+- Ford-Fulkerson:	368.08 ms - (fastest)
+- Capacity Scaling:	539.18 ms
+- Preflow Push:		3134.85 ms - (slowest)
+
+Input graph: Mesh/50r_50c_100cap.txt
+- Ford-Fulkerson:	648.25 ms - (fastest)
+- Capacity Scaling:	835.25 ms
+- Preflow Push:		1993.41 ms - (slowest)
+
+Input graph: Mesh/50r_50c_500cap.txt
+- Ford-Fulkerson:	2578.24 ms
+- Capacity Scaling:	3675.7 ms - (slowest)
+- Preflow Push:		1677.88 ms - (fastest)
+
+Input graph: Mesh/50r_50c_1000cap.txt
+- Ford-Fulkerson:	3913.97 ms
+- Capacity Scaling:	6862.03 ms - (slowest)
+- Preflow Push:		2341.05 ms - (fastest)
+
