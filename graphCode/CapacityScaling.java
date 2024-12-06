@@ -77,11 +77,11 @@ public class CapacityScaling extends FordFulkerson {
     }
 
     /**
-     * 
-     * @param graph
-     * @param residual
-     * @param delta
-     * @return
+     * Adds flow based on an augmenting path in the given graph and residual graph, with the given delta value
+     * @param graph The given graph
+     * @param residual The residual graph
+     * @param delta The delta value
+     * @return The value of the flow added
      */
     public static int augment(SimpleGraph graph, SimpleGraph residual, int delta) {
 
@@ -97,6 +97,11 @@ public class CapacityScaling extends FordFulkerson {
         return flow;
     }
 
+    /**
+     * Method for finding max flow using Capacity Scaling
+     * @param filepath The file path to the graph input
+     * @return The max flow
+     */
     public static int capScaling(String filepath) {
         SimpleGraph graph = GraphReader.readGraph(filepath);
         SimpleGraph residual = buildResidual(graph);
@@ -113,6 +118,11 @@ public class CapacityScaling extends FordFulkerson {
         }
         return maxflow;
     }
+
+    /**
+     * Main method for testing Capacity Scaling algorithm.
+     * @param args Command line args
+     */
     public static void main(String[] args) {
         String[] tests = {
                 "test.txt",
