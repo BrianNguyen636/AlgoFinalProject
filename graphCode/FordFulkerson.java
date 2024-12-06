@@ -220,6 +220,11 @@ public class FordFulkerson {
         
         return maxflow;
     }
+
+    /**
+     * Main method for testing Ford-Fulkerson algorithm.
+     * @param args command line args.
+     */
     public static void main(String[] args){
 
         String[] tests = {

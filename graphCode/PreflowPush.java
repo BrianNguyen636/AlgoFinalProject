@@ -145,6 +145,10 @@ public class PreflowPush {
         return vData.excess;
     }
 
+    /** 
+     * Main method for testing PreflowPush algorithm.
+     * @param args command line args.
+     */
     public static void main(String[] args) {
         String[] tests = {
             "test.txt",

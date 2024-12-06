@@ -5,7 +5,7 @@ import java.util.Arrays;
  * algorithms.
  * 
  * @author Andrew Nguyen
- * @version 05/12/24
+ * @version 05/12/2024
  */
 public class Main {
 
