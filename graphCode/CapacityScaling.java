@@ -3,6 +3,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Uses Capacity Scaling algorithm to find the max flow for a network flow graph.
+ * 
+ * @author Brian Nguyen
+ * @version 05/12/2024
+ */
 public class CapacityScaling extends FordFulkerson {
 
     /**
@@ -70,6 +76,13 @@ public class CapacityScaling extends FordFulkerson {
         return false;
     }
 
+    /**
+     * Adds flow based on an augmenting path in the given graph and residual graph, with the given delta value
+     * @param graph The given graph
+     * @param residual The residual graph
+     * @param delta The delta value
+     * @return The value of the flow added
+     */
     public static int augment(SimpleGraph graph, SimpleGraph residual, int delta) {
 
 //        System.out.println("---Finding augment");
@@ -84,6 +97,11 @@ public class CapacityScaling extends FordFulkerson {
         return flow;
     }
 
+    /**
+     * Method for finding max flow using Capacity Scaling
+     * @param filepath The file path to the graph input
+     * @return The max flow
+     */
     public static int capScaling(String filepath) {
         SimpleGraph graph = GraphReader.readGraph(filepath);
         SimpleGraph residual = buildResidual(graph);
@@ -100,6 +118,11 @@ public class CapacityScaling extends FordFulkerson {
         }
         return maxflow;
     }
+
+    /**
+     * Main method for testing Capacity Scaling algorithm.
+     * @param args Command line args
+     */
     public static void main(String[] args) {
         String[] tests = {
                 "test.txt",

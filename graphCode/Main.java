@@ -1,9 +1,27 @@
 import java.util.Arrays;
 
+/**
+ * This class runs the benchmarking test for all three network flow
+ * algorithms.
+ * 
+ * @author Andrew Nguyen
+ * @version 05/12/2024
+ */
 public class Main {
-    public static void main(String[] args) {
-        final int ITERATIONS = 100;
-        
+
+    /** Number of times to repeat algorithm run for each input graph. */
+    final int ITERATIONS = 100;
+
+    /**
+     * Main method that runs benchmarking test for the following network
+     * flow algorithms:
+     * - Ford-Fulkerson
+     * - Capacity Scaling
+     * - Preflow Push
+     * @param args Command line args
+     */
+    public static void main(String[] args) {        
+        /** The input graphs */
         String[] tests = {
                 // "test.txt",
                 // "test2.txt",
@@ -99,6 +117,12 @@ public class Main {
         
     }
 
+    /**
+     * Determines if the runtime is the fastest or slowest.
+     * @param time The runtime to check.
+     * @param min  The minimum runtime.
+     * @param max  The maximum runtime.
+     */
     public static void fastestOrSlowest(double time, double min, double max) {
         if (time == min) {
             System.out.print(" - (fastest)");
