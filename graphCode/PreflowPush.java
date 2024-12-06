@@ -2,8 +2,12 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 
-
-
+/**
+ * Uses Preflow Push algorithm to find the max flow for a network flow graph.
+ * 
+ * @author Brian Nguyen
+ * @version 05/12/2024
+ */
 public class PreflowPush {
     static boolean DEBUG = false;
 

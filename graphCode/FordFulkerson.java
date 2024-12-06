@@ -1,5 +1,11 @@
 import java.util.*;
 
+/**
+ * Uses Ford-Fulkerson algorithm to find the max flow for a network flow graph.
+ * 
+ * @author Brian Nguyen
+ * @version 05/12/2024
+ */
 public class FordFulkerson {
 
     static boolean DEBUG = false;
